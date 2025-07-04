@@ -1,12 +1,10 @@
 import type { Meta, StoryObj } from "@storybook/react-vite";
 
-import { action } from "storybook/actions";
-
-import { SelectTag } from "./SelectTag";
+import { TextTag } from "./TextTag";
 
 const meta = {
-  title: "Components/SelectTag",
-  component: SelectTag,
+  title: "Components/TextTag",
+  component: TextTag,
   tags: ["autodocs"],
   parameters: {
     layout: "centered",
@@ -18,14 +16,14 @@ const meta = {
       defaultValue: true,
     },
   },
-  args: { onClick: action("clicked") },
-} satisfies Meta<typeof SelectTag>;
+  args: {},
+} satisfies Meta<typeof TextTag>;
 
 export default meta;
 type Story = StoryObj<typeof meta>;
 
 export const Default: Story = {
   args: {
-    label: "지역 태그",
+    label: "텍스트 태그",
   },
 };

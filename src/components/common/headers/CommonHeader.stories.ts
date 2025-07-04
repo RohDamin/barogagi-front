@@ -4,8 +4,9 @@ import { action } from "storybook/actions";
 import { CommonHeader } from "./CommonHeader";
 
 const meta = {
-  title: "Example/CommonHeader",
+  title: "Components/CommonHeader",
   component: CommonHeader,
+  tags: ["autodocs"],
   parameters: {
     layout: "fullscreen",
   },

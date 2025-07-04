@@ -5,12 +5,19 @@ import { action } from "storybook/actions";
 import { CommonTag } from "./commonTag";
 
 const meta = {
-  title: "Example/CommonTag",
+  title: "Components/CommonTag",
   component: CommonTag,
+  tags: ["autodocs"],
   parameters: {
     layout: "centered",
   },
-  argTypes: {},
+  argTypes: {
+    hasHash: {
+      control: "boolean",
+      description: "# 해시 존재 여부",
+      defaultValue: true,
+    },
+  },
   args: { onClick: action("clicked") },
 } satisfies Meta<typeof CommonTag>;
 
