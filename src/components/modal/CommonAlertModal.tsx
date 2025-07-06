@@ -1,12 +1,11 @@
 import { useEffect, useState } from "react";
 import CommonAlertModalLayout from "../layout/CommonAlertModalLayout";
-import CommonAlertModalContent from "./CommonAlertModalContent";
+import CommonAlertModalContent from "./CommonModalContent";
 import type { CommonAlertModalPropsType } from "@/types/modalTypes";
 
 const CommonAlertModal = ({
   isOpen,
-  buttonLabel,
-  onClose,
+  buttonInfo, // buttonLabel, onClose 대신 buttonInfo 사용
   modalContent,
 }: CommonAlertModalPropsType) => {
   // shouldRenderLayout: 모달 레이아웃 컴포넌트 자체를 DOM에 렌더링할지 여부 (사라지는 애니메이션 후 제거)
@@ -37,8 +36,7 @@ const CommonAlertModal = ({
   return (
     <CommonAlertModalLayout
       isVisible={showAnimation} // Layout의 애니메이션 상태 제어
-      label={buttonLabel}
-      onClick={onClose} // 배경 클릭 및 버튼 클릭 시 부모의 onClose 호출
+      buttonInfo={buttonInfo} // buttonLabel, onClick 대신 buttonInfo 전달
       onCloseComplete={() => setShouldRenderLayout(false)} // Layout의 애니메이션 완료 후 레이아웃 제거
     >
       <CommonAlertModalContent
