@@ -7,14 +7,6 @@ export default function CommonAlertModalLayout({
   onCloseComplete,
   children,
 }: CommonAlertModalLayoutPropsType) {
-  useEffect(() => {
-    if (!isVisible) {
-      // isVisible이 false가 되면 사라지는 애니메이션 후 onCloseComplete 호출
-      const timer = setTimeout(onCloseComplete, 300); // 애니메이션 시간(300ms) 후 호출
-      return () => clearTimeout(timer); // 클린업
-    }
-  }, [isVisible, onCloseComplete]); // isVisible 또는 onCloseComplete 변경 시 실행
-
   // isVisible이 false이고 애니메이션이 끝났으면 아무것도 렌더링하지 않음 (CommonConfirmModalLayout과 일관성 유지)
   const [show, setShow] = useState(isVisible);
 
