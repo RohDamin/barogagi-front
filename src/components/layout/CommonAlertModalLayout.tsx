@@ -1,12 +1,5 @@
-import React, { useEffect } from "react";
-
-type CommonAlertModalLayoutProps = {
-  isVisible: boolean; // 모달 보임 상태 제어 prop
-  label: string;
-  onClick: () => void; // 버튼 클릭 시 호출 (모달 닫기 로직 포함)
-  onCloseComplete: () => void; // 사라지는 애니메이션 완료 후 호출
-  children?: React.ReactNode;
-};
+import { useEffect } from "react";
+import type { CommonAlertModalLayoutPropsType } from "@/types/modalTypes";
 
 export default function CommonAlertModalLayout({
   isVisible,
@@ -14,7 +7,7 @@ export default function CommonAlertModalLayout({
   onClick,
   onCloseComplete,
   children,
-}: CommonAlertModalLayoutProps) {
+}: CommonAlertModalLayoutPropsType) {
   useEffect(() => {
     if (!isVisible) {
       // isVisible이 false가 되면 사라지는 애니메이션 후 onCloseComplete 호출
