@@ -3,10 +3,8 @@ import type { CommonConfirmModalLayoutPropsType } from "@/types/modalTypes";
 
 export default function CommonConfirmModalLayout({
   isVisible,
-  confirmLabel,
-  cancelLabel,
-  onConfirm,
-  onCancel,
+  confirmButtonInfo,
+  cancelButtonInfo,
   onCloseComplete,
   children,
 }: CommonConfirmModalLayoutPropsType) {
@@ -39,7 +37,7 @@ export default function CommonConfirmModalLayout({
         show ? "opacity-100" : "opacity-0"
       }`}
       style={{ background: "rgba(0,0,0,0.4)" }} // 더 투명한 배경
-      onClick={onCancel} // 배경 클릭 시 취소 액션 실행
+      onClick={cancelButtonInfo.onClick} // 배경 클릭 시 취소 액션 실행 (cancelButtonInfo.onClick 사용)
     >
       <div
         className={`bg-white rounded-2xl shadow-lg min-w-[280px] text-center transform transition-all duration-300 ${
@@ -57,16 +55,18 @@ export default function CommonConfirmModalLayout({
           {/* 취소 버튼 */}
           <button
             className="flex-1 px-4 py-3 text-gray-70 rounded-bl-2xl hover:bg-gray-10 transition border-r border-gray-10" // 좌측 하단만 둥글게, 우측 테두리
-            onClick={onCancel}
+            onClick={cancelButtonInfo.onClick} // onCancel 대신 cancelButtonInfo.onClick 사용
           >
-            {cancelLabel}
+            {cancelButtonInfo.label}{" "}
+            {/* cancelLabel 대신 cancelButtonInfo.label 사용 */}
           </button>
           {/* 확인 버튼 */}
           <button
             className="flex-1 px-4 py-3 text-blue-600 font-semibold rounded-br-2xl hover:bg-gray-10 transition" // 우측 하단만 둥글게
-            onClick={onConfirm}
+            onClick={confirmButtonInfo.onClick} // onConfirm 대신 confirmButtonInfo.onClick 사용
           >
-            {confirmLabel}
+            {confirmButtonInfo.label}{" "}
+            {/* confirmLabel 대신 confirmButtonInfo.label 사용 */}
           </button>
         </div>
       </div>
