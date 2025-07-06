@@ -1,6 +1,6 @@
 import type { ModalContentsType } from "@/types/modalTypes";
 
-const CommonAlertModalContent = ({ title, content }: ModalContentsType) => {
+const CommonModalContent = ({ title, content }: ModalContentsType) => {
   return (
     <div>
       <h1>{title}</h1>
@@ -9,4 +9,4 @@ const CommonAlertModalContent = ({ title, content }: ModalContentsType) => {
   );
 };
 
-export default CommonAlertModalContent;
+export default CommonModalContent;

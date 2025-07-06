@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import CommonAlertModalLayout from "../layout/CommonAlertModalLayout";
-import CommonAlertModalContent from "./CommonModalContent";
+import CommonModalContent from "./CommonModalContent";
 import type { CommonAlertModalPropsType } from "@/types/modalTypes";
 
 const CommonAlertModal = ({
@@ -39,7 +39,7 @@ const CommonAlertModal = ({
       buttonInfo={buttonInfo} // buttonLabel, onClick 대신 buttonInfo 전달
       onCloseComplete={() => setShouldRenderLayout(false)} // Layout의 애니메이션 완료 후 레이아웃 제거
     >
-      <CommonAlertModalContent
+      <CommonModalContent
         title={modalContent.title}
         content={modalContent.content}
       />
