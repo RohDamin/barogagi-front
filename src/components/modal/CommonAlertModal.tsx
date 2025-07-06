@@ -18,8 +18,7 @@ const CommonAlertModal = ({
       // 모달을 열어야 할 때: 일단 레이아웃 렌더링 시작, 애니메이션 시작
       setShouldRenderLayout(true);
       // 애니메이션 시작을 위해 DOM 업데이트 사이클 대기 (약간의 딜레이)
-      const timer = setTimeout(() => setShowAnimation(true), 50);
-      return () => clearTimeout(timer);
+      setShowAnimation(true);
     } else {
       // 모달을 닫아야 할 때: 사라지는 애니메이션 시작
       setShowAnimation(false);
