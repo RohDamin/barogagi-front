@@ -3,7 +3,7 @@ import { useNavigate } from "react-router-dom";
 import { TERMS_TEXT } from "@/constants/texts/auth/signup/terms";
 
 import { BackHeader } from "@/components/common/headers/BackHeader";
-import { TermsAgreementItem } from "./components/TermsAgreementItem";
+import { TermsAgreementItem } from "@/components/TermsAgreementItem";
 import Button from "@/components/common/buttons/CommonButton";
 
 import { CheckBoxButton } from "@/components/auth/common/CheckBoxButton";
