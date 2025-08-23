@@ -11,9 +11,12 @@ import SignupCompletePage from "@/pages/auth/signup/SignupCompletePage";
 /* 메인 페이지 */
 // 일정 생성 탭
 import SelectDatePage from "@/pages/main/plan/SelectDatePage";
+import EmailLoginPage from "@/pages/auth/signin/EmailLoginPage";
 
 export const AuthRoutes = () => (
   <Routes>
+    <Route path="/" element={<AuthLandingPage />} />
+    <Route path="/login" element={<EmailLoginPage />} />
     <Route path="/login" element={<AuthLandingPage />} />
     {/* 회원가입 로직 페이지 */}
     <Route path="/signup" element={<TermsPage />} />
