@@ -1,6 +1,5 @@
 import { EmailLoginForm } from "@/components/auth/signin/EmailLoginForm";
 
-
 export default function EmailLoginPage() {
   return (
     <div className=" flex flex-col items-center justify-between p-4">

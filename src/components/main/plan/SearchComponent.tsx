@@ -1,0 +1,74 @@
+import { useMemo } from "react";
+
+import type { Region } from "@/types/main/plan/region";
+
+import { normalizeKo } from "@/utils/ko";
+import { filterRegionsKorean } from "@/utils/regionFilter";
+
+import SearchHeaderContents from "./SearchHeaderContents";
+import type { HeaderContentsProps } from "./SearchHeaderContents";
+interface SearchComponentProps {
+  HeaderContentsProps: HeaderContentsProps;
+  regions: Region[];
+  handleSelectRegion: (regionNum: number) => void;
+}
+
+export const SearchComponent = ({
+  HeaderContentsProps,
+  regions,
+  handleSelectRegion,
+}: SearchComponentProps) => {
+  // 입력 키워드 정규화 적용
+  const keyword = normalizeKo(HeaderContentsProps.searchInputProps.value);
+  const hasInput = keyword.length > 0;
+
+  // 필터링(항상 Region[])
+  const filtered = useMemo<Region[]>(() => {
+    return hasInput ? filterRegionsKorean(regions, keyword) : [];
+  }, [regions, hasInput, keyword]);
+
+  return (
+    <div className="flex flex-1 h-full flex-col w-full gap-4">
+      {/* 헤더는 고정 높이(내용만큼) */}
+      <div className="flex-none">
+        <SearchHeaderContents {...HeaderContentsProps} />
+      </div>
+
+      {/* 검색 결과 컨테이너: 남은 공간 차지 + 내부 스크롤 */}
+      <div className="flex-1 min-h-0 overflow-y-auto">
+        {/* pb-28: 하단 fixed CTA 높이만큼 여유를 줘서 가려지지 않게 함 */}
+        {hasInput && (
+          <ul className="flex flex-col">
+            {filtered.length > 0 ? (
+              filtered.map((region) => (
+                <li
+                  key={region.REGION_NUM}
+                  className="flex w-full items-baseline border-b border-gray-10 py-4 hover:bg-gray-10 transition"
+                >
+                  <button
+                    type="button"
+                    onClick={() => handleSelectRegion(region.REGION_NUM)}
+                    className="flex w-full typo-caption text-left"
+                  >
+                    {[
+                      region.REGION_LEVEL_1,
+                      region.REGION_LEVEL_2,
+                      region.REGION_LEVEL_3,
+                      region.REGION_LEVEL_4,
+                    ]
+                      .filter(Boolean)
+                      .join(" ")}
+                  </button>
+                </li>
+              ))
+            ) : (
+              <li className="w-full typo-caption py-4 text-gray-60 text-center">
+                검색 결과가 없습니다.
+              </li>
+            )}
+          </ul>
+        )}
+      </div>
+    </div>
+  );
+};

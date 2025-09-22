@@ -9,7 +9,7 @@ import { formatDateToKorean } from "@/utils/date";
 import KeyboardArrowLeftIcon from "@mui/icons-material/KeyboardArrowLeft";
 import KeyboardArrowRightIcon from "@mui/icons-material/KeyboardArrowRight";
 
-interface CalendarProps {
+export interface CalendarProps {
   withTitle?: boolean;
   selectedDate: Date | null;
   onChangeDate: (date: Date | null) => void;
@@ -101,12 +101,12 @@ export default function Calendar({
                   <span className={clsx(colorClass)}>{day}</span>
                 </div>
               </div>
-              {isMarked && (
-                <div
-                  aria-label="일정 있음"
-                  className="w-1.5 h-1.5 rounded-full bg-alert-red"
-                />
-              )}
+              <div
+                className={clsx(
+                  "w-1.5 h-1.5 rounded-full",
+                  isMarked ? "bg-alert-red" : "bg-transparent"
+                )}
+              />
             </div>
           );
         }}

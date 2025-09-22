@@ -22,7 +22,11 @@ import VerifyPage from "@/pages/auth/verify/VerifyPage";
 
 /* 메인 페이지 */
 // 일정 생성 탭
+import PlanListPage from "@/pages/main/plan/PlanListPage";
 import SelectDatePage from "@/pages/main/plan/SelectDatePage";
+import SelectLocationPage from "../pages/main/plan/SelectLocationPage";
+import TravelStylePage from "@/pages/main/plan/TravelStylePage";
+import EmailLoginPage from "@/pages/auth/signin/EmailLoginPage";
 
 export const AuthRoutes = () => (
   <Routes>
@@ -45,6 +49,9 @@ export const AuthRoutes = () => (
     <Route path="/verify/:flow" element={<VerifyPage />} />
     <Route path="/verify/:flow/code" element={<VerifyCodePage />} />
     {/* 일정 생성 */}
+    <Route path="/plan" element={<PlanListPage />} />
     <Route path="/plan/date" element={<SelectDatePage />} />
+    <Route path="/plan/location" element={<SelectLocationPage />} />
+    <Route path="/plan/travelStyle" element={<TravelStylePage />} />
   </Routes>
 );
