@@ -26,7 +26,6 @@ import PlanListPage from "@/pages/main/plan/PlanListPage";
 import SelectDatePage from "@/pages/main/plan/SelectDatePage";
 import SelectLocationPage from "../pages/main/plan/SelectLocationPage";
 import TravelStylePage from "@/pages/main/plan/TravelStylePage";
-import EmailLoginPage from "@/pages/auth/signin/EmailLoginPage";
 
 export const AuthRoutes = () => (
   <Routes>
