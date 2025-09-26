@@ -4,8 +4,9 @@ export const ROUTES = {
   HOME: "/",
   AUTH: {
     SIGNIN: "/login",
-    SIGNUP: "/auth/signup",
-    SIGNUP_TERMS: "/auth/signup/terms",
+    SIGNUP: "/signup",
+    SIGNUP_TERMS: "/signup/terms",
+
     FIND_ACCOUNT: "/find",
   },
 
