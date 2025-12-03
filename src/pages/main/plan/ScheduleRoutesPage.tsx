@@ -6,7 +6,10 @@ import type {
   PlanDataProps,
   PlanNoteMap,
 } from "@/types/main/plan/planListTypes";
-import { findPlanByNum } from "@/utils/main/plan/findPlan";
+import {
+  filterPlansByScheduleNum,
+  findPlanByNum,
+} from "@/utils/main/plan/filterList";
 
 import ScheduleRoutesContent from "@/components/main/plan/route/ScheduleRoutesContent";
 
@@ -24,6 +27,12 @@ const ScheduleRoutesPage = ({ variant }: ScheduleRoutesPageProps) => {
   const isDetail = variant === "detail";
 
   const { id } = useParams<{ id: string }>(); // /plan/:id/detail 에서 사용
+  // 내 일정 페이지에서 넘어온 num 기반 필터된 plan 리스트
+  const plansForPage = filterPlansByScheduleNum(
+    isDetail,
+    mockPlans,
+    id ? Number(id) : undefined
+  );
 
   useEffect(() => {
     // 추후 서버 연동 시 수정 가능성 존재
@@ -57,7 +66,7 @@ const ScheduleRoutesPage = ({ variant }: ScheduleRoutesPageProps) => {
   };
 
   const handleRequestEdit = (planNum: number) => {
-    filterPlanByNum(mockPlans, planNum);
+    filterPlanByNum(plansForPage, planNum);
     setIsEditModalOpen(true);
   };
   // 컴포넌트 내부에서 사용할 메모 저장 변수
@@ -118,7 +127,7 @@ const ScheduleRoutesPage = ({ variant }: ScheduleRoutesPageProps) => {
       )}
       <DeletePlanModal
         isOpen={isDeleteModalOpen}
-        onClickCancle={() => setIsDeleteModalOpen(false)}
+        onClickCancel={() => setIsDeleteModalOpen(false)}
         onClickConfirm={() => {
           // 추후 서버 연결 시 deletePlanNum를 넘겨 삭제하는 로직 추가
           setIsDeleteModalOpen(false);
@@ -132,7 +141,7 @@ const ScheduleRoutesPage = ({ variant }: ScheduleRoutesPageProps) => {
             scheduleName,
             onChangeScheduleName: setScheduleName,
           }}
-          plans={mockPlans}
+          plans={plansForPage}
           // isEditable false → create 모드로 동작
           isEditable={false}
           footer={{
@@ -147,7 +156,7 @@ const ScheduleRoutesPage = ({ variant }: ScheduleRoutesPageProps) => {
             scheduleName,
             onChangeScheduleName: setScheduleName,
           }}
-          plans={mockPlans}
+          plans={plansForPage}
           // isEditable true → detail 모드로 동작: popMenu 연동
           isEditable={isDetail}
           onRequestEdit={handleRequestEdit}

@@ -1,26 +1,26 @@
 import { CourseCard } from "./CourseCard";
-import type { Schedule } from "@/types/schedule";
+import type { Schedule } from "@/types/scheduleTypes";
 
 interface ListViewProps {
   schedules: Schedule[];
-  onEdit: () => void;
-  onDelete: () => void;
+  onClickCard: (scheduleNum: number) => void;
+  onDelete: (scheduleNum: number) => void;
 }
 
-export const ListView = ({ schedules, onEdit, onDelete }: ListViewProps) => {
+export const ListView = ({
+  schedules,
+  onClickCard,
+  onDelete,
+}: ListViewProps) => {
   return (
-    <div className="flex flex-col w-full gap-4 pb-6">
-      {schedules.map((schedule, idx) => {
+    <div className="flex flex-col w-full h-full gap-4 pb-6 overflow-y-auto hide-scrollbar">
+      {schedules.map((schedule) => {
         return (
           <CourseCard
-            key={idx}
-            userNum={schedule.userNum}
-            scheduleNum={schedule.scheduleNum}
-            date={schedule.date}
-            scheduleTitle={schedule.scheduleTitle}
-            tags={schedule.tags}
-            onEdit={onEdit}
-            onDelete={onDelete}
+            key={schedule.scheduleNum}
+            schedule={schedule}
+            onClickCard={() => onClickCard(schedule.scheduleNum)}
+            onDelete={() => onDelete(schedule.scheduleNum)}
           />
         );
       })}
