@@ -2,7 +2,8 @@ import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { TERMS_TEXT } from "@/constants/texts/auth/signup/terms";
 
-import { PageTitle } from "@/components/auth/common/PageTitle";
+import { BackHeader } from "@/components/common/headers/BackHeader";
+import { TermsAgreementItem } from "@/components/TermsAgreementItem";
 import Button from "@/components/common/buttons/CommonButton";
 
 import { SelectAllConsentButton } from "@/components/auth/signup/SelectAllConsentButton";
