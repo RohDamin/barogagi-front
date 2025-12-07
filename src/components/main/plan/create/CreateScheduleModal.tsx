@@ -1,0 +1,33 @@
+import CommonConfirmModal from "@/components/common/modal/common-modal/CommonConfirmModal";
+
+import { ROUTES_CREATE_TEXT } from "@/constants/texts/main/plan/routesCreate";
+
+interface CreateScheduleModalProps {
+  isConfirmOpen: boolean;
+  onConfirmCancel: () => void;
+  onConfirmConfirm: () => void;
+}
+
+export const CreateScheduleModal = ({
+  isConfirmOpen,
+  onConfirmCancel,
+  onConfirmConfirm,
+}: CreateScheduleModalProps) => {
+  return (
+    <CommonConfirmModal
+      isOpen={isConfirmOpen}
+      cancelButtonInfo={{
+        label: ROUTES_CREATE_TEXT.CONFIRM_MODAL.CANCEL_LABEL,
+        onClick: onConfirmCancel,
+      }}
+      confirmButtonInfo={{
+        label: ROUTES_CREATE_TEXT.CONFIRM_MODAL.CONFIRM_LABEL,
+        onClick: onConfirmConfirm,
+      }}
+      modalContent={{
+        title: ROUTES_CREATE_TEXT.CONFIRM_MODAL.TITLE,
+        content: ROUTES_CREATE_TEXT.CONFIRM_MODAL.CONTENTS,
+      }}
+    />
+  );
+};
