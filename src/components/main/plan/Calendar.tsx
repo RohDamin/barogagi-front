@@ -4,8 +4,8 @@ import { ko } from "date-fns/locale";
 import "react-datepicker/dist/react-datepicker.css";
 
 import clsx from "clsx";
-import { formatDateToKorean } from "@/utils/date";
 
+import { CalendarTitle } from "./CalendarTitle";
 import KeyboardArrowLeftIcon from "@mui/icons-material/KeyboardArrowLeft";
 import KeyboardArrowRightIcon from "@mui/icons-material/KeyboardArrowRight";
 
@@ -29,10 +29,8 @@ export default function Calendar({
 
   return (
     <div className="flex flex-col w-full items-baseline gap-8">
-      {withTitle && (
-        <span className="typo-title-01 text-gray-black">
-          {formatDateToKorean(selectedDate)}
-        </span>
+      {withTitle && selectedDate && (
+        <CalendarTitle selectedDate={selectedDate} />
       )}
       <DatePicker
         locale={ko}
