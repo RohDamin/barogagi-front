@@ -12,7 +12,7 @@ export const usePhoneVerify = () => {
   const [status, setStatus] = useState<VerifyStatus>("idle");
   const [error, setError] = useState<string | null>(null);
   const [remainingSeconds, setRemainingSeconds] = useState<number>(0);
-  const timerRef = useRef<NodeJS.Timeout | null>(null);
+  const timerRef = useRef<ReturnType<typeof setInterval> | null>(null);
 
   // 타이머 정리 함수
   const clearTimer = useCallback(() => {

@@ -4,23 +4,26 @@ import type { Region } from "@/types/main/plan/region";
 
 import { normalizeKo } from "@/utils/ko";
 import { filterRegionsKorean } from "@/utils/regionFilter";
+import { useDebouncedKeyword } from "@/utils/useDebouncedKeyword";
 
 import { SearchInput } from "@/components/common/inputs/SearchInput";
 import type { SearchInputProps } from "@/components/common/inputs/SearchInput";
-interface SearchComponentProps {
-  searchInput: SearchInputProps;
-  regions: Region[];
-  handleSelectRegion: (regionNum: number) => void;
+import EmptyStateSection from "../common/EmptyStateSection";
+
+interface RegionSearchContainerProps {
+  searchInput: SearchInputProps; // 검색어 상태 관리 props
+  regions: Region[]; // 전체 지역 데이터
+  handleSelectRegion: (regionNum: number) => void; // 지역 선택 시 호출되는 핸들러
 }
 
-export const SearchComponent = ({
+const RegionSearchContainer = ({
   searchInput,
   regions,
   handleSelectRegion,
-}: SearchComponentProps) => {
+}: RegionSearchContainerProps) => {
   // 입력 키워드 정규화 적용
   const keyword = normalizeKo(searchInput.value);
-  const hasInput = keyword.length > 0;
+  const hasInput = useDebouncedKeyword({ value: keyword });
 
   // 필터링(항상 Region[])
   const filtered = useMemo<Region[]>(() => {
@@ -62,8 +65,8 @@ export const SearchComponent = ({
                 </li>
               ))
             ) : (
-              <li className="w-full typo-caption py-4 text-gray-60 text-center">
-                검색 결과가 없습니다.
+              <li>
+                <EmptyStateSection />
               </li>
             )}
           </ul>
@@ -72,3 +75,5 @@ export const SearchComponent = ({
     </div>
   );
 };
+
+export default RegionSearchContainer;
