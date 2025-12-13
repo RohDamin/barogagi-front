@@ -79,12 +79,16 @@ const ScheduleRoutesPage = ({ variant }: ScheduleRoutesPageProps) => {
 
   // ----- 일정 삭제하기 modal -----
   const [isDeleteModalOpen, setIsDeleteModalOpen] = useState<boolean>(false);
-
-  const [deletePlanNum, setDeletePlanNum] = useState<number | null>(null); // 삭제할 일정 num
+  const [deletePlanNum, setDeletePlanNum] = useState<number | null>(null);
 
   const handleRequestDelete = (planNum: number) => {
     setDeletePlanNum(planNum);
     setIsDeleteModalOpen(true);
+  };
+
+  const handleCloseDeleteModal = () => {
+    setIsDeleteModalOpen(false);
+    setDeletePlanNum(null);
   };
 
   // ----- 일정 수정하기 bottom modal -----
@@ -183,10 +187,11 @@ const ScheduleRoutesPage = ({ variant }: ScheduleRoutesPageProps) => {
       )}
       <DeletePlanModal
         isOpen={isDeleteModalOpen}
-        onClickCancel={() => setIsDeleteModalOpen(false)}
+        onClickCancel={handleCloseDeleteModal}
         onClickConfirm={() => {
-          // 추후 서버 연결 시 deletePlanNum를 넘겨 삭제하는 로직 추가
-          setIsDeleteModalOpen(false);
+          // TODO: deletePlanNum을 사용해서 서버 삭제 API 호출
+          console.log("삭제할 일정:", deletePlanNum);
+          handleCloseDeleteModal();
         }}
       />
       {/* 공통 콘텐츠 영역 */}

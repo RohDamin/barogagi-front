@@ -39,18 +39,17 @@ const ScheduleListPage = () => {
   };
 
   const [isDeleteOpen, setIsDeleteOpen] = useState<boolean>(false);
-  const [deleteScheduleNum, setDeleteScheduleNum] = useState<number | null>(
-    null
-  ); // 삭제할 일정 num
+  const [deleteTargetNum, setDeleteTargetNum] = useState<number | null>(null);
 
   // 삭제 버튼 클릭 액션 함수
   const handleDeleteSchedule = (scheduleNum: number) => {
-    setDeleteScheduleNum(scheduleNum);
+    setDeleteTargetNum(scheduleNum);
     setIsDeleteOpen(true);
   };
 
   const handleCloseDeleteModal = () => {
     setIsDeleteOpen(false);
+    setDeleteTargetNum(null);
   };
 
   return (
@@ -62,7 +61,8 @@ const ScheduleListPage = () => {
         isOpen={isDeleteOpen}
         onClickCancel={handleCloseDeleteModal}
         onClickConfirm={() => {
-          // 서버 연동시 삭제 로직 추가
+          // TODO: deleteTargetNum을 사용해서 서버 삭제 API 호출
+          console.log("삭제할 일정:", deleteTargetNum);
           handleCloseDeleteModal();
         }}
       />
