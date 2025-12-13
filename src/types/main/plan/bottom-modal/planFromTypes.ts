@@ -12,9 +12,9 @@
  */
 interface ModalAction {
   isOpen: boolean;
+  onClickEditTitle: () => void;
   onClose: () => void;
   onConfirm: () => void;
-  onClickAction: () => void;
 }
 
 /**
@@ -58,3 +58,38 @@ export interface PlanFormModalProps {
   action: ModalAction;
   info: ModalInfo;
 }
+
+// 일정 수정 폼 전용 드래프트 타입
+export interface EditPlanDraft {
+  planNum: number; // 계획 번호 (PK) - 대표 식별자
+
+  // Plan 섹션: 시간/제목 등 "계획" 자체에 대한 정보
+  plan: {
+    planNm: string; // 계획 이름
+    startTime: string; // 시작 시간 (HH:mm)
+    endTime: string; // 종료 시간 (HH:mm)
+  };
+
+  // Place 섹션: 위치 관련 정보
+  place: {
+    placeNum: number | null; // PLACE_NUM, 아직 선택 안 했으면 null
+    placeNm: string; // UI 표시용 장소 이름 (regionNm)
+    address: string; // UI 표시용 전체 주소
+  };
+
+  /**
+   *  Tags 섹션: 태그 관련 정보 (필요 시)
+   *  tags: {
+    selectedTagNums: number[]; // 선택된 TAG_NUM 배열
+  };
+   */
+}
+
+// place 섹션만 추출한 전용 타입
+export type EditPlanPlace = EditPlanDraft["place"];
+
+// 장소 선택 핸들러 공통 타입
+export type OnSelectPlace = (location: EditPlanPlace) => void;
+
+// planNum 기준으로 메모를 저장하는 맵 타입
+export type PlanNoteMap = Record<number, string>;

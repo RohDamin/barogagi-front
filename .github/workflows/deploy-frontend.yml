@@ -23,6 +23,8 @@ jobs:
             echo "DIST_ID=${{ secrets.TEST_CLOUDFRONT_DIST_ID }}" >> $GITHUB_ENV
           fi
 
+      - name: Install dependencies
+        run: npm install -D @types/node
       - name: Setup Node.js
         uses: actions/setup-node@v4
         with:
