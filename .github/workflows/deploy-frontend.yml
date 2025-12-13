@@ -26,29 +26,31 @@ jobs:
       - name: Setup Node.js
         uses: actions/setup-node@v4
         with:
-          node-version: '18'  # or your preferred version
+          node-version: '18'
 
-      - name: Install dependencies
-        working-directory: ./front-end  # Change to your frontend directory
-        run: npm ci  # Use 'ci' for cleaner installs in CI/CD
+      - name: Install frontend dependencies
+        working-directory: ./front-end
+        run: npm ci
 
       - name: Build React app (Vite)
         working-directory: ./front-end
         run: npm run build
 
       - name: Verify build output
-        run: ls -la front-end/dist
+        run: |
+          echo "=== dist root ==="
+          ls -la front-end/dist
+          echo "=== index.html preview ==="
+          head -n 5 front-end/dist/index.html
 
       - name: Upload to S3
         uses: jakejarvis/s3-sync-action@master
-        with:
-          args: --delete
         env:
           AWS_S3_BUCKET: ${{ env.S3_BUCKET }}
           AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
           AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
-          AWS_REGION: "ap-northeast-2"
-          SOURCE_DIR: "front-end/dist"
+          AWS_REGION: ap-northeast-2
+          SOURCE_DIR: front-end/dist
 
       - name: Invalidate CloudFront cache
         run: |
@@ -58,5 +60,5 @@ jobs:
         env:
           AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
           AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
-          AWS_REGION: "ap-northeast-2"
+          AWS_REGION: ap-northeast-2
           DIST_ID: ${{ env.DIST_ID }}
