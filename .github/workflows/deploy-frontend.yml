@@ -23,11 +23,21 @@ jobs:
             echo "DIST_ID=${{ secrets.TEST_CLOUDFRONT_DIST_ID }}" >> $GITHUB_ENV
           fi
 
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '18'  # or your preferred version
+
       - name: Install dependencies
-        run: npm install -D @types/node
+        working-directory: ./front-end  # Change to your frontend directory
+        run: npm ci  # Use 'ci' for cleaner installs in CI/CD
 
       - name: Build React app (Vite)
+        working-directory: ./front-end
         run: npm run build
+
+      - name: Verify build output
+        run: ls -la front-end/dist
 
       - name: Upload to S3
         uses: jakejarvis/s3-sync-action@master
