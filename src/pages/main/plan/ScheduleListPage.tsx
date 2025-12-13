@@ -2,33 +2,35 @@ import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 
 import { ROUTES } from "@/constants/routes";
-import { SCHEDULE_LIST_TEXT } from "@/constants/texts/main/plan/scheduleList";
-import { mockSchedules } from "@/mock/schedules";
+import type { ScheduleViewType } from "@/components/main/plan/main/ScheduleViewToggleButton";
+import {
+  mockSchedules,
+  pastMockSchedules,
+  allSchedules,
+} from "@/mock/schedules";
 import { getMarkedDates } from "@/utils/getMarkedDates";
 
-import { TitleHeader } from "@/components/common/headers/TitleHeader";
-import { PlanViewToggleButton } from "@/components/main/plan/PlanViewToggleButton";
-import type { PlanViewType } from "@/components/main/plan/PlanViewToggleButton";
+import ScheduleListHeader from "@/components/main/plan/main/ScheduleListHeader";
 import { CalendarView } from "@/components/main/plan/CalendarView";
-import { ListView } from "@/components/main/plan/ListView";
-import { AddScheduleButton } from "@/components/main/plan/AddScheduleButton";
+import ListView from "@/components/main/plan/main/ListView";
+import AddScheduleButton from "@/components/main/plan/main/AddScheduleButton";
 
 import DeleteScheduleModal from "@/components/main/plan/DeleteScheduleModal";
 
 const ScheduleListPage = () => {
   const navigate = useNavigate();
 
-  const [viewMode, setViewMode] = useState<PlanViewType>("list");
+  const [viewType, setViewType] = useState<ScheduleViewType>("list");
 
   const toggleViewType = () => {
-    if (viewMode === "list") {
-      setViewMode("calendar");
-    } else setViewMode("list");
+    if (viewType === "list") {
+      setViewType("calendar");
+    } else setViewType("list");
   };
 
   // calendar 모드
   const [selectedDate, setSelectedDate] = useState<Date | null>(null);
-  const markedDates = getMarkedDates(mockSchedules);
+  const markedDates = getMarkedDates(allSchedules);
 
   // 카드 클릭 시 상세 페이지로 이동하는 함수
   const handleOpenDetail = (scheduleNum: number) => {
@@ -37,18 +39,17 @@ const ScheduleListPage = () => {
   };
 
   const [isDeleteOpen, setIsDeleteOpen] = useState<boolean>(false);
-  const [deleteScheduleNum, setDeleteScheduleNum] = useState<number | null>(
-    null
-  ); // 삭제할 일정 num
+  const [deleteTargetNum, setDeleteTargetNum] = useState<number | null>(null);
 
   // 삭제 버튼 클릭 액션 함수
   const handleDeleteSchedule = (scheduleNum: number) => {
-    setDeleteScheduleNum(scheduleNum);
+    setDeleteTargetNum(scheduleNum);
     setIsDeleteOpen(true);
   };
 
   const handleCloseDeleteModal = () => {
     setIsDeleteOpen(false);
+    setDeleteTargetNum(null);
   };
 
   return (
@@ -60,26 +61,20 @@ const ScheduleListPage = () => {
         isOpen={isDeleteOpen}
         onClickCancel={handleCloseDeleteModal}
         onClickConfirm={() => {
-          // 서버 연동시 삭제 로직 추가
+          // TODO: deleteTargetNum을 사용해서 서버 삭제 API 호출
+          console.log("삭제할 일정:", deleteTargetNum);
           handleCloseDeleteModal();
         }}
       />
-      <div className="shrink-0 sticky top-0 z-10 bg-gray-white">
-        <TitleHeader label={SCHEDULE_LIST_TEXT.HEADER}>
-          <PlanViewToggleButton
-            viewType={viewMode}
-            toggleViewType={toggleViewType}
-          />
-        </TitleHeader>
-      </div>
+      <ScheduleListHeader viewType={viewType} toggleViewType={toggleViewType} />
       <div className="flex-1 w-full min-h-0">
-        {viewMode === "calendar" ? (
+        {viewType === "calendar" ? (
           <div className="flex w-full h-full">
             <CalendarView
               selectedDate={selectedDate}
               onChangeDate={(date) => setSelectedDate(date)}
               markedDates={markedDates}
-              schedules={mockSchedules}
+              schedules={allSchedules}
               onDelete={handleDeleteSchedule}
               onClickCard={handleOpenDetail}
             />
@@ -88,8 +83,9 @@ const ScheduleListPage = () => {
           <div className="flex w-full h-full px-6">
             <ListView
               schedules={mockSchedules}
-              onDelete={handleDeleteSchedule}
+              pastSchedules={pastMockSchedules}
               onClickCard={handleOpenDetail}
+              onDelete={handleDeleteSchedule}
             />
           </div>
         )}

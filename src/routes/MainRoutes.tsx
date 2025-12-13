@@ -5,7 +5,7 @@ import { Routes, Route } from "react-router-dom";
 import ScheduleListPage from "@/pages/main/plan/ScheduleListPage";
 import SelectDatePage from "@/pages/main/plan/SelectDatePage";
 import SelectLocationPage from "../pages/main/plan/SelectLocationPage";
-import TravelStylePage from "@/pages/main/plan/TravelStylePage";
+import ScheduleStylePage from "@/pages/main/plan/ScheduleStylePage";
 import ScheduleRoutesPage from "@/pages/main/plan/ScheduleRoutesPage";
 import LocationSearchPage from "@/pages/main/plan/LocationSearchPage";
 
@@ -21,19 +21,22 @@ export const MainRoutes = () => (
     <Route path="/plan" element={<ScheduleListPage />} />
     <Route path="/plan/date" element={<SelectDatePage />} />
     <Route path="/plan/location" element={<SelectLocationPage />} />
-    <Route path="/plan/travelStyle" element={<TravelStylePage />} />
-    {/* 추천 루트: /plan/create */}
+    <Route path="/plan/style" element={<ScheduleStylePage />} />
     <Route
       path="/plan/create"
       element={<ScheduleRoutesPage variant="create" />}
     />
 
-    {/* 상세 화면: /plan/:id/detail */}
+    {/* 일정 상세 화면: /plan/:id/detail */}
     <Route
       path="/plan/:id/detail"
       element={<ScheduleRoutesPage variant="detail" />}
-    />
+    >
+      {/* 자식 검색 페이지 */}
+      <Route path="search" element={<LocationSearchPage />} />
+    </Route>
+
     {/* 공통 장소 검색 페이지 */}
-    <Route path="/plan/location-search" element={<LocationSearchPage />} />
+    <Route path="/plan/search" element={<LocationSearchPage />} />
   </Routes>
 );
